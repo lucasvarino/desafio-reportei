@@ -2,7 +2,7 @@
   <main class="flex-1 bg-muted/40 p-6 md:p-10">
     <div class="max-w-6xl mx-auto grid gap-8">
       <CommitActivityCard />
-      <div class="grid grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
         <RepositoryInfoCard />
         <RecentCommitsCard />
       </div>
