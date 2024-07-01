@@ -1,7 +1,10 @@
 <template>
   <Card>
     <CardHeader>
-      <CardTitle>Commit Activity</CardTitle>
+      <div class="flex justify-between">
+        <CardTitle>Commit Activity</CardTitle>
+        <RepositorySelect />
+      </div>
       <CardDescription>
         A graph showing the number of commits over time for your GitHub repository.
       </CardDescription>
