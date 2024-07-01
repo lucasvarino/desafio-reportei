@@ -1,6 +1,7 @@
 <template>
   <Header />
-  <DashboardMain />
+<!--  <DashboardMain />-->
+  <HeroSection />
 </template>
 
 <script setup>
