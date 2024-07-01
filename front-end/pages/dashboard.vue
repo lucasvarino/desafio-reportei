@@ -1,5 +1,6 @@
 <template>
   <Header />
+  <DashboardMain />
 </template>
 
 <script setup>
