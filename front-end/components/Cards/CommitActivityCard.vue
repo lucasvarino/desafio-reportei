@@ -7,7 +7,7 @@
       </CardDescription>
     </CardHeader>
     <CardContent>
-      <!-- Gráfico aqui -->
+      <AreaChart :data="data" index="date" :categories="['commits']" />
     </CardContent>
   </Card>
 </template>
@@ -17,4 +17,27 @@ import Card from '@/components/ui/card/Card.vue'
 import CardHeader from '@/components/ui/card/CardHeader.vue'
 import CardTitle from '@/components/ui/card/CardTitle.vue'
 import CardDescription from '@/components/ui/card/CardDescription.vue'
+import AreaChart from "~/components/ui/chart-area/AreaChart.vue";
+
+const data = [];
+
+onMounted(() => {
+  const getRandomCommits = () => Math.floor(Math.random() * 10) + 1;
+
+  const today = new Date();
+  for (let i = 0; i < 90; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() - i);
+
+    const formattedDate = date.toISOString().split('T')[0];
+
+    data.push({
+      date: formattedDate,
+      commits: getRandomCommits(),
+    });
+  }
+
+  console.log(data);
+});
+
 </script>

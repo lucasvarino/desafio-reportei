@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@nuxt/image": "^1.7.0",
+    "@unovis/ts": "^1.4.2",
+    "@unovis/vue": "^1.4.2",
+    "@vueuse/core": "^10.11.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-vue-next": "^0.399.0",
