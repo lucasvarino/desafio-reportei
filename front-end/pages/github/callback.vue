@@ -9,19 +9,25 @@ import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const userStore = useUserStore();
 
 onMounted(async () => {
   const code = router.currentRoute.value.query.code
   if (code) {
     // Get request for token
-    const response = await fetch(`http://localhost:8000/api/auth/github/callback?code=${code}`)
+    const response = await fetch(`http://localhost:8000/api/auth/github/callback?code=${code}`, {
+      credentials: 'include',
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+
+      }),
+    })
     const data = await response.json()
-    const token = data.token
+    const { token, user } = data
 
-    console.log(token)
-
-    // Save token to local storage
-    localStorage.setItem('token', token)
+    userStore.setUser(user)
+    userStore.setToken(token)
 
     return router.push('/dashboard')
   }

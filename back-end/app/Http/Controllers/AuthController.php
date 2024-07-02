@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +33,13 @@ class AuthController extends Controller
 
         $token = $user->createToken('authToken')->plainTextToken;
 
-        return response()->json(['token' => $token]);
+        return response()->json(['user' => $user, 'token' => $token], 200)
+            ->cookie('auth_token', $token, 60 * 24, null, null, true, true);
+    }
+
+    public function logout()
+    {
+        $cookie = \Illuminate\Support\Facades\Cookie::forget('auth_token');
+        return response()->json(['message' => 'Logged out'], 200)->withCookie($cookie);
     }
 }
