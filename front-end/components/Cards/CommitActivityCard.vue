@@ -41,8 +41,6 @@ onMounted(() => {
       commits: getRandomCommits(),
     });
   }
-
-  console.log(data);
 });
 
 </script>

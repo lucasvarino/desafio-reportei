@@ -8,10 +8,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useStorage } from '@vueuse/core'
+
+const repo = useStorage('repository', "");
+
+const change = (value: string) => {
+  repo.value = value;
+}
 </script>
 
 <template>
-  <Select>
+  <Select @update:modelValue="change" :default-value="repo">
     <SelectTrigger class="w-[300px]">
       <SelectValue placeholder="Select a repository" />
     </SelectTrigger>
