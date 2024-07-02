@@ -32,8 +32,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        // Retorne um token JWT ou um token de sessão
-        $token = $user->createToken('authToken')->accessToken;
+        $token = $user->createToken('authToken')->plainTextToken;
 
         return response()->json(['token' => $token]);
     }
