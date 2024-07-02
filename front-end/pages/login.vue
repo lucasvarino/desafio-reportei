@@ -24,7 +24,15 @@
 import Button from '@/components/ui/button/Button.vue'
 import GithubIcon from '@/components/icons/GithubIcon.vue'
 
+const userStore = useUserStore()
+const router = useRouter()
 const login = () => {
   window.location.href = 'http://localhost:8000/api/auth/github'
 }
+
+onMounted(() => {
+  if (userStore.isLogged()) {
+    router.push('/dashboard')
+  }
+})
 </script>

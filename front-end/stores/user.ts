@@ -38,5 +38,9 @@ export const useUserStore = defineStore('user', () => {
         }
     }
 
-    return { user, token, setUser, setToken, fetchUser, logout }
+    const isLogged = () => {
+        return user.value !== null && token.value !== null
+    }
+
+    return { user, token, setUser, setToken, fetchUser, logout, isLogged }
 })
