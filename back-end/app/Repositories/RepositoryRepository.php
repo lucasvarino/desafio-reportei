@@ -30,7 +30,10 @@ class RepositoryRepository implements RepositoryRepositoryInterface
      */
     public function getByUsername(string $username): Collection
     {
-        return $this->model->where('username', $username)->get();
+        // A model tem o user_id e o user_id tem username
+        return $this->model->whereHas('user', function ($query) use ($username) {
+            $query->where('username', $username);
+        })->get();
     }
 
     /**
