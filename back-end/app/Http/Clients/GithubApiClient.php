@@ -27,7 +27,11 @@ class GithubApiClient
     public function getAllRepositories(string $username): array
     {
         try {
-            $response = $this->client->get("users/{$username}/repos");
+            $response = $this->client->get("users/{$username}/repos", [
+                'query' => [
+                    'per_page' => 100,
+                ],
+            ]);
 
             if ($response->getStatusCode() !== 200) {
                 return [];
