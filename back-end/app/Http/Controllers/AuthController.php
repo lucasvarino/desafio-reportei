@@ -24,6 +24,7 @@ class AuthController extends Controller
             ],
             [
                 'name' => $githubUser->name,
+                'username' => $githubUser->nickname,
                 'email' => $githubUser->email,
                 'avatar' => $githubUser->avatar,
                 'github_token' => $githubUser->token,

@@ -9,12 +9,13 @@ use GuzzleHttp\Exception\GuzzleException;
 class GithubApiClient
 {
     protected Client $client;
-    public function __construct()
+    public function __construct(string $token)
     {
         $this->client = new Client([
             'base_uri' => 'https://api.github.com/',
             'headers' => [
                 'Accept' => 'application/vnd.github.v3+json',
+                'Authorization' => "Bearer {$token}",
             ],
         ]);
     }
