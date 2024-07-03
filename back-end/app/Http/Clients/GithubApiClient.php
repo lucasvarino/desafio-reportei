@@ -5,6 +5,7 @@ namespace App\Http\Clients;
 use App\Entities\RepositoryEntity;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Collection;
 
 class GithubApiClient
 {
@@ -22,9 +23,9 @@ class GithubApiClient
 
     /**
      * @param string $username
-     * @return RepositoryEntity[]
+     * @return Collection<RepositoryEntity>
      */
-    public function getAllRepositories(string $username): array
+    public function getUserRepositories(string $username): Collection
     {
         try {
             $response = $this->client->get("users/{$username}/repos", [
@@ -34,15 +35,14 @@ class GithubApiClient
             ]);
 
             if ($response->getStatusCode() !== 200) {
-                return [];
+                return collect();
             }
 
             return collect(json_decode($response->getBody()->getContents(), true))
-                ->map(fn ($repository) => RepositoryEntity::new($repository))
-                ->all();
+                ->map(fn ($repository) => RepositoryEntity::new($repository));
 
         } catch (GuzzleException $e) {
-            return [];
+            return collect();
         }
     }
 }

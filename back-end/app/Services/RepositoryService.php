@@ -2,14 +2,18 @@
 
 namespace App\Services;
 
+use App\Http\Clients\GithubApiClient;
 use App\Models\Repository;
 use App\Repositories\RepositoryRepositoryInterface;
 use Illuminate\Support\Collection;
 
 class RepositoryService
 {
-    public function __construct(protected RepositoryRepositoryInterface $repositoryRepository)
+    protected RepositoryRepositoryInterface $repositoryRepository;
+
+    public function __construct(RepositoryRepositoryInterface $repositoryRepository)
     {
+        $this->repositoryRepository = $repositoryRepository;
     }
 
     /**
@@ -19,5 +23,25 @@ class RepositoryService
     public function getUserRepositories(string $userId): Collection
     {
         return $this->repositoryRepository->getByUserId($userId);
+    }
+
+    /**
+     * @param string $username
+     * @param string $userId
+     * @param string $token
+     * @return void
+     */
+    public function syncRepositories(string $username, string $userId, string $token): void
+    {
+        $client = new GithubApiClient($token);
+        $githubRepositories = $client->getUserRepositories($username);
+        $databaseRepositories = $this->repositoryRepository->getByUserId($username)
+            ->pluck('github_id');
+
+        $newRepositories = $githubRepositories->filter(function ($repository) use ($databaseRepositories) {
+            return !$databaseRepositories->contains($repository->github_id);
+        });
+
+        $this->repositoryRepository->syncRepositories($username, $userId, $newRepositories);
     }
 }
