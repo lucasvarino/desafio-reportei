@@ -43,9 +43,10 @@ class RepositoryRepository implements RepositoryRepositoryInterface
         return $this->model->updateOrCreate($attributes, $values);
     }
 
-    public function syncRepositories(string $username, string $userId, Collection $newRepositories): void
+    public function syncRepositories(string $username, string $userId, Collection $newRepositories): Collection
     {
-        DB::transaction(function () use ($username, $userId, $newRepositories) {
+        $createdRepositories = collect();
+        DB::transaction(function () use ($username, $userId, $newRepositories, $createdRepositories) {
            foreach ($newRepositories as $repository) {
                $this->model->create([
                    'user_id' => $userId,
@@ -55,7 +56,11 @@ class RepositoryRepository implements RepositoryRepositoryInterface
                    'url' => $repository->url,
                    'description' => $repository->description,
                ]);
+
+                $createdRepositories->push($repository);
            }
         });
+
+        return $createdRepositories;
     }
 }

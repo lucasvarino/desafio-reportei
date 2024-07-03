@@ -15,5 +15,6 @@ Route::post('auth/logout', [AuthController::class, 'logout']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('repositories', [RepositoryController::class, 'index']);
+    Route::get('repositories/sync', [RepositoryController::class, 'syncRepositories']);
     Route::get('repositories/{repository}/commits', [CommitController::class, 'index']);
 });

@@ -23,8 +23,8 @@ interface RepositoryRepositoryInterface
     /**
      * @param string $username
      * @param string $userId
-     * @param Collection $newRepositories
-     * @return void
+     * @param Collection<Repository $newRepositories
+     * @return Collection<Repository>
      */
-    public function syncRepositories(string $username, string $userId, Collection $newRepositories): void;
+    public function syncRepositories(string $username, string $userId, Collection $newRepositories): Collection;
 }

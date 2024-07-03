@@ -29,9 +29,9 @@ class RepositoryService
      * @param string $username
      * @param string $userId
      * @param string $token
-     * @return void
+     * @return Collection<Repository>
      */
-    public function syncRepositories(string $username, string $userId, string $token): void
+    public function syncRepositories(string $username, string $userId, string $token): Collection
     {
         $client = new GithubApiClient($token);
         $githubRepositories = $client->getUserRepositories($username);
@@ -42,6 +42,6 @@ class RepositoryService
             return !$databaseRepositories->contains($repository->github_id);
         });
 
-        $this->repositoryRepository->syncRepositories($username, $userId, $newRepositories);
+        return $this->repositoryRepository->syncRepositories($username, $userId, $newRepositories);
     }
 }
