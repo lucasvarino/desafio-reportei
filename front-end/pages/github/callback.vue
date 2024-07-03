@@ -10,6 +10,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const userStore = useUserStore();
+const repositoryStore = useRepositoryStore();
 
 onMounted(async () => {
   const code = router.currentRoute.value.query.code
@@ -28,6 +29,7 @@ onMounted(async () => {
 
     userStore.setUser(user)
     userStore.setToken(token)
+    await repositoryStore.syncRepositories(token)
 
     return router.push('/dashboard')
   }

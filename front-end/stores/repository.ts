@@ -7,11 +7,38 @@ export const useRepositoryStore = defineStore('repository', () => {
     const loading = ref(false)
     const error = ref<any>(null)
 
-    const fetchRepositories = async () => {
+    const fetchRepositories = async (token: string) => {
         loading.value = true
         try {
-            const response = await fetch('') //TODO: inserir url da API
+            const response = await fetch('http://localhost:8000/api/repositories', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json',
+                }
+            })
             repositories.value = await response.json()
+        } catch (err) {
+            console.error(err)
+            error.value = err
+        } finally {
+            loading.value = false
+        }
+    }
+
+    const syncRepositories = async (token: string) => {
+        console.log("Token: ", token)
+        loading.value = true
+        try {
+            const response = await fetch('http://localhost:8000/api/repositories/sync', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json',
+                }
+            })
+            const json = await response.json()
+            repositories.value = json.repositories
         } catch (err) {
             console.error(err)
             error.value = err
@@ -48,6 +75,7 @@ export const useRepositoryStore = defineStore('repository', () => {
         loading,
         error,
         fetchRepositories,
+        syncRepositories,
         fetchRepository
     }
 })
