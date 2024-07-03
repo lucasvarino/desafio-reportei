@@ -6,6 +6,7 @@ use App\Http\Clients\GithubApiClient;
 use App\Models\Repository;
 use App\Repositories\RepositoryRepositoryInterface;
 use Illuminate\Support\Collection;
+use function Symfony\Component\String\s;
 
 class RepositoryService
 {
@@ -42,6 +43,8 @@ class RepositoryService
             return !$databaseRepositories->contains($repository->github_id);
         });
 
-        return $this->repositoryRepository->syncRepositories($username, $userId, $newRepositories);
+        $syncRepos = $this->repositoryRepository->syncRepositories($username, $userId, $newRepositories);
+
+        return $syncRepos->isEmpty() ? $githubRepositories : $syncRepos;
     }
 }
