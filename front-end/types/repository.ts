@@ -3,4 +3,5 @@ export type Repository = {
     name: string
     description: string
     url: string
+    github_id: number
 }
