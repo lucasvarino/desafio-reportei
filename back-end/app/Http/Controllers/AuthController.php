@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Clients\GithubApiClient;
+use Illuminate\Support\Facades\Cookie;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +30,6 @@ class AuthController extends Controller
                 'github_refresh_token' => $githubUser->refreshToken,
             ]
         );
-
         Auth::login($user);
 
         $token = $user->createToken('authToken')->plainTextToken;
@@ -39,7 +40,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        $cookie = \Illuminate\Support\Facades\Cookie::forget('auth_token');
+        $cookie = Cookie::forget('auth_token');
         return response()->json(['message' => 'Logged out'], 200)->withCookie($cookie);
     }
 }
