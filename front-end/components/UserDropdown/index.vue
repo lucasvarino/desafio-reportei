@@ -17,7 +17,7 @@
         Settings
       </DropdownMenuItem>
       <DropdownMenuSeparator />
-      <DropdownMenuItem>
+      <DropdownMenuItem @click="logout">
         <LogOutIcon class="w-4 h-4 mr-2" />
         Logout
       </DropdownMenuItem>
@@ -37,6 +37,9 @@ import UserIcon from "~/components/icons/UserIcon.vue";
 import SettingsIcon from "~/components/icons/SettingsIcon.vue";
 import LogOutIcon from "~/components/icons/LogOutIcon.vue";
 
+const userStore = useUserStore()
+const router = useRouter()
+
 const props = defineProps({
   userName: {
     type: String,
@@ -47,4 +50,9 @@ const props = defineProps({
     required: true
   }
 })
+
+const logout = () => {
+  userStore.logout()
+  router.push('/login')
+}
 </script>

@@ -17,9 +17,22 @@ export const useUserStore = defineStore('user', () => {
         token.value = tokenConfig.value
     }
 
-    const logout = () => {
-        user.value = null
+    const logout = async () => {
+        // Request logout to API
+        await fetch('http://localhost:8000/api/auth/logout', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token.value || '',
+            }
+        })
+
+        // Remove token from cookie
+        const tokenConfig = useCookie('token')
+        tokenConfig.value = null
         token.value = null
+        user.value = null
     }
 
     const fetchUser = async () => {
