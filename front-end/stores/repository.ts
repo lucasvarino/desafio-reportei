@@ -63,7 +63,7 @@ export const useRepositoryStore = defineStore('repository', () => {
     // Computed state for select component
     const repositoriesOptions = computed(() => {
         return repositories.value.map((repo) => ({
-            value: repo.github_id.toString(),
+            value: repo.id.toString(),
             label: repo.name
         }))
     });

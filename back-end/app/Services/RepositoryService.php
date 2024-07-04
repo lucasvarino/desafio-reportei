@@ -36,8 +36,7 @@ class RepositoryService
     {
         $client = new GithubApiClient($token);
         $githubRepositories = $client->getUserRepositories($username);
-        $databaseRepositories = $this->repositoryRepository->getByUsername($username)
-            ->pluck('github_id');
+        $databaseRepositories = $this->repositoryRepository->getByUsername($username);
 
         $repoIds = $githubRepositories->pluck('github_id');
 

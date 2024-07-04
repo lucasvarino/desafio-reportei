@@ -26,7 +26,8 @@ class RepositoryController extends Controller
     public function syncRepositories(Request $request): JsonResponse
     {
         $repositories = $this->repositoryService->syncRepositories($request->user()->username, $request->user()->id, $request->user()->github_token);
+        $response = $repositories->map(fn ($repository) => $repository->only(['id', 'name']));
 
-        return response()->json(['message' => 'Repositories synced successfully', 'repositories' => $repositories]);
+        return response()->json(['message' => 'Repositories synced successfully', 'repositories' => $response]);
     }
 }
