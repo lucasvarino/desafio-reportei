@@ -39,12 +39,14 @@ class RepositoryService
         $databaseRepositories = $this->repositoryRepository->getByUsername($username)
             ->pluck('github_id');
 
-        $newRepositories = $githubRepositories->filter(function ($repository) use ($databaseRepositories) {
-            return !$databaseRepositories->contains($repository->github_id);
+        $repoIds = $githubRepositories->pluck('github_id');
+
+        $newRepositories = $githubRepositories->filter(function ($repository) use ($repoIds) {
+            return !$repoIds->contains($repository->github_id);
         });
 
         $syncRepos = $this->repositoryRepository->syncRepositories($username, $userId, $newRepositories);
 
-        return $syncRepos->isEmpty() ? $githubRepositories : $syncRepos;
+        return $syncRepos->isEmpty() ? $databaseRepositories : $syncRepos;
     }
 }

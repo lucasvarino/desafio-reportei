@@ -51,16 +51,20 @@ class RepositoryRepository implements RepositoryRepositoryInterface
         $createdRepositories = collect();
         DB::transaction(function () use ($username, $userId, $newRepositories, $createdRepositories) {
            foreach ($newRepositories as $repository) {
-               $this->model->create([
+               $model = $this->model->create([
                    'user_id' => $userId,
                    'github_id' => $repository->github_id,
                    'name' => $repository->name,
                    'full_name' => $repository->full_name,
                    'url' => $repository->url,
+                   'open_issues_count' => $repository->open_issues_count,
+                   'stargazers_count' => $repository->stargazers_count,
+                   'pull_requests_count' => $repository->pull_requests_count,
+                   'last_updated_at' => $repository->last_updated_at,
                    'description' => $repository->description,
                ]);
 
-                $createdRepositories->push($repository);
+                $createdRepositories->push($model);
            }
         });
 

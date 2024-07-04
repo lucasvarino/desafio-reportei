@@ -18,6 +18,10 @@ class Repository extends Model
         'full_name',
         'description',
         'url',
+        'open_issues_count',
+        'stargazers_count',
+        'pull_requests_count',
+        'last_updated_at',
     ];
 
     public function user(): BelongsTo

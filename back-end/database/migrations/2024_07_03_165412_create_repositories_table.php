@@ -18,6 +18,10 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('description')->nullable();
             $table->string('url');
+            $table->integer('open_issues_count');
+            $table->integer('stargazers_count');
+            $table->integer('pull_requests_count');
+            $table->dateTime('last_updated_at');
 
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
