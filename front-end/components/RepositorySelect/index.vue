@@ -11,10 +11,12 @@ import {
 import { useStorage } from '@vueuse/core'
 
 const repositoryStore = useRepositoryStore()
+const userStore = useUserStore()
 const selected = useStorage('repository', "");
 
 const change = (value: string) => {
   selected.value = value;
+  repositoryStore.fetchRepository(value, userStore.token as string);
 }
 
 const repositoriesValue = repositoryStore.repositoriesOptions

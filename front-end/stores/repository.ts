@@ -47,10 +47,16 @@ export const useRepositoryStore = defineStore('repository', () => {
         }
     }
 
-    const fetchRepository = async (name: string) => {
+    const fetchRepository = async (id: string, token: string) => {
         loading.value = true
         try {
-            const response = await fetch(``) //TODO: inserir url da API
+            const response = await fetch(`http://localhost:8000/api/repositories/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json',
+                }
+            })
             repository.value = await response.json()
         } catch (err) {
             console.error(err)
