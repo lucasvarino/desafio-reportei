@@ -23,6 +23,13 @@ class RepositoryController extends Controller
         return response()->json($repositories);
     }
 
+    public function show(Request $request, string $repositoryId): JsonResponse
+    {
+        $repository = $this->repositoryService->getRepositoryById($repositoryId);
+
+        return response()->json($repository);
+    }
+
     public function syncRepositories(Request $request): JsonResponse
     {
         $repositories = $this->repositoryService->syncRepositories($request->user()->username, $request->user()->id, $request->user()->github_token);

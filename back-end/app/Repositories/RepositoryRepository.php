@@ -16,6 +16,15 @@ class RepositoryRepository implements RepositoryRepositoryInterface
     }
 
     /**
+     * @param string $id
+     * @return Repository
+     */
+    public function getById(string $id): Repository
+    {
+        return $this->model->findOrFail($id);
+    }
+
+    /**
      * @param string $userId
      * @return Collection<Repository>
      */

@@ -27,6 +27,15 @@ class RepositoryService
     }
 
     /**
+     * @param string $id
+     * @return Repository
+     */
+    public function getRepositoryById(string $id): Repository
+    {
+        return $this->repositoryRepository->getById($id);
+    }
+
+    /**
      * @param string $username
      * @param string $userId
      * @param string $token
