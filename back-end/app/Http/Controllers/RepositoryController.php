@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Clients\GithubApiClient;
+use App\Http\Resources\RepositoryResource;
 use App\Services\RepositoryService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -26,8 +27,9 @@ class RepositoryController extends Controller
     public function show(Request $request, string $repositoryId): JsonResponse
     {
         $repository = $this->repositoryService->getRepositoryById($repositoryId);
+        $this->repositoryService->syncCommits($repository->user->username, $repository->name, $repository->id, $request->user()->github_token);
 
-        return response()->json($repository);
+        return response()->json(RepositoryResource::make($repository));
     }
 
     public function syncRepositories(Request $request): JsonResponse

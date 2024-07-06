@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,6 +22,7 @@ class CommitResource extends JsonResource
             'author_email' => $this->author_email,
             'commit_date' => $this->commit_date,
             'message' => $this->message,
+            'last_updated_at' => Carbon::parse($this->commit_date)->diffForHumans(),
         ];
     }
 }

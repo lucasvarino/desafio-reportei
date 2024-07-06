@@ -1,3 +1,5 @@
+import type {DetailedCommit} from "~/types/commit";
+
 export type Repository = {
     id: number
     name: string
@@ -8,4 +10,5 @@ export type Repository = {
     open_issues_count: string
     last_updated_at: string
     pull_requests_count: number
+    commits: DetailedCommit[]
 }

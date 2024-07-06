@@ -1,12 +1,14 @@
 import type { Repository } from "~/types/repository";
 import { defineStore } from 'pinia'
+import { type DetailedCommit, type Commit } from "~/types/commit";
 
 export const useRepositoryStore = defineStore('repository', () => {
     const repositories = ref<Repository[]>([])
     const repository = ref<Repository | null>(null)
     const loading = ref(false)
     const error = ref<any>(null)
-    const commits = ref<any>(null)
+    const commits = ref<Commit| null>(null)
+    const recentCommits = ref<DetailedCommit[]>([])
 
     const fetchRepositories = async (token: string) => {
         loading.value = true
@@ -66,6 +68,8 @@ export const useRepositoryStore = defineStore('repository', () => {
                 pull_requests_count: repo.pull_requests_count.toString()
             }
             await fetchCommits(id, token)
+            // Pegar os 4 commits mais recentes
+            recentCommits.value = repo.commits.slice(0, 4)
         } catch (err) {
             console.error(err)
             error.value = err
@@ -105,6 +109,7 @@ export const useRepositoryStore = defineStore('repository', () => {
         repositories,
         repository,
         commits,
+        recentCommits,
         repositoriesOptions,
         loading,
         error,

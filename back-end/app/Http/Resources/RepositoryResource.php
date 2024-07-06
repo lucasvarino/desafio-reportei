@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,8 +23,10 @@ class RepositoryResource extends JsonResource
             'full_name' => $this->full_name,
             'url' => $this->url,
             'description' => $this->description,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'last_updated_at' => Carbon::parse($this->last_updated_at)->diffForHumans(),
+            'stargazers_count' => $this->stargazers_count,
+            'open_issues_count' => $this->open_issues_count,
+            'pull_requests_count' => $this->pull_requests_count,
             'commits' => CommitResource::collection($this->whenLoaded('commits')),
         ];
     }
