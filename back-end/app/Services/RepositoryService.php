@@ -57,4 +57,14 @@ class RepositoryService
 
         return $syncRepos->isEmpty() ? $databaseRepositories : $syncRepos;
     }
+
+    public function syncCommits(string $owner, string $repository, string $repositoryId, string $token): Collection
+    {
+        $client = new GithubApiClient($token);
+        $commits = $client->getCommits($owner, $repository, $repositoryId);
+
+        $this->repositoryRepository->syncCommits($repositoryId, $commits);
+
+        return $commits;
+    }
 }

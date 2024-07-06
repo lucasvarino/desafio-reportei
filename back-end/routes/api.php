@@ -17,5 +17,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('repositories', [RepositoryController::class, 'index']);
     Route::get('repositories/sync', [RepositoryController::class, 'syncRepositories']);
     Route::get('repositories/{repository}', [RepositoryController::class, 'show']);
-    Route::get('repositories/{repository}/commits', [CommitController::class, 'index']);
+    Route::get('repositories/{repository}/commits', [RepositoryController::class, 'syncCommits']);
 });

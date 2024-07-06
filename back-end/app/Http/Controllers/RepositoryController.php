@@ -37,4 +37,13 @@ class RepositoryController extends Controller
 
         return response()->json(['message' => 'Repositories synced successfully', 'repositories' => $response]);
     }
+
+    public function syncCommits(Request $request, string $repositoryId): JsonResponse
+    {
+        $repository = $this->repositoryService->getRepositoryById($repositoryId);
+        $owner = $repository->user->username;
+        $commits = $this->repositoryService->syncCommits($owner, $repository->name, $repository->id, $request->user()->github_token);
+
+        return response()->json($commits);
+    }
 }

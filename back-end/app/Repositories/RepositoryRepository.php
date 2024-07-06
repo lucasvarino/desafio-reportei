@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Commit;
 use App\Models\Repository;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -78,5 +79,22 @@ class RepositoryRepository implements RepositoryRepositoryInterface
         });
 
         return $createdRepositories;
+    }
+
+    /**
+     * @param string $repositoryId
+     * @param Collection $commits
+     * @return Collection<Commit>
+     */
+    public function syncCommits(string $repositoryId, Collection $commits): Collection
+    {
+        $commits = collect();
+        DB::transaction(function () use ($repositoryId, $commits) {
+            $repository = $this->model->findOrFail($repositoryId);
+
+            $commits->push($repository->commits()->createMany($commits));
+        });
+
+        return $commits;
     }
 }
