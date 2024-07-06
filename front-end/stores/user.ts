@@ -5,7 +5,7 @@ import type { User } from '@/types/user'
 export const useUserStore = defineStore('user', () => {
     const user = ref<User | null>(null)
     const token = ref<string | null>()
-    const api = 'http://api.lucasvarino.tech/api/'
+    const api = 'https://api.lucasvarino.tech/api/'
 
     const setUser = (newUser: User) => {
         console.log('Setting user', newUser)

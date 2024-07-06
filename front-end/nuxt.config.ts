@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     prefix: '',
     componentDir: './components/ui'
   },
-  plugins: ["~/plugins/initializeAuth.ts", { src: "~/plugins/allow-http-requests.ts", mode: "client" }],
+  plugins: ["~/plugins/initializeAuth.ts"],
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
   },
