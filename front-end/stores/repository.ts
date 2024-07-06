@@ -3,8 +3,7 @@ import { defineStore } from 'pinia'
 import { type DetailedCommit, type Commit } from "~/types/commit";
 
 export const useRepositoryStore = defineStore('repository', () => {
-    // Pegar a url com base no ambiente no .env
-    const api = useRuntimeConfig().appEnv === 'production' ? 'https://162.243.166.199/api/' : 'http://localhost:8000/api/'
+    const api = 'http://162.243.166.199/api/'
     const repositories = ref<Repository[]>([])
     const repository = ref<Repository | null>(null)
     const loading = ref(false)
