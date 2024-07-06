@@ -11,7 +11,7 @@ export default defineNuxtPlugin(async () => {
             await userStore.fetchUser()
             await repositoryStore.syncRepositories(token)
         } catch (error) {
-            console.error('Failed to fetch user data', error)
+            console.error('Failed to fetch data', error)
         }
     }
 })

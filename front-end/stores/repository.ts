@@ -57,7 +57,13 @@ export const useRepositoryStore = defineStore('repository', () => {
                     'Content-Type': 'application/json',
                 }
             })
-            repository.value = await response.json()
+            const repo = await response.json()
+            repository.value = {
+                ...repo,
+                stargazers_count: repo.stargazers_count.toString(),
+                open_issues_count: repo.open_issues_count.toString(),
+                pull_requests_count: repo.pull_requests_count.toString()
+            }
         } catch (err) {
             console.error(err)
             error.value = err

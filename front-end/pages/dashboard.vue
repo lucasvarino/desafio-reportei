@@ -1,6 +1,6 @@
 <template>
   <Header />
-  <DashboardMain v-if="isSelected" />
+  <DashboardMain v-if="isSelected && repositoryStore.repository" />
   <HeroSection v-else />
 </template>
 
@@ -10,16 +10,11 @@ import { useStorage } from "@vueuse/core";
 
 const isSelected = useStorage('repository', "");
 const userStore = useUserStore();
+const repositoryStore = useRepositoryStore();
 
 onMounted(async () => {
-  const repos = await fetch('http://localhost:8000/api/repositories', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${userStore.token}`
-    }
-  })
-
-  console.log(await repos.json());
+  if (isSelected) {
+    await repositoryStore.fetchRepository(isSelected.value, userStore.token)
+  }
 })
 </script>

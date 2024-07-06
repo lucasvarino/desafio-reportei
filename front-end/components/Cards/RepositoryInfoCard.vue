@@ -4,16 +4,16 @@
       <CardTitle>Repository Info</CardTitle>
     </CardHeader>
     <CardContent class="grid gap-4">
-      <InfoItem title="shadcn/ui" description="Beautifully designed components">
+      <InfoItem :title="repository.name" :description="repository.description">
         <BookOpenIcon class="w-6 h-6" />
       </InfoItem>
-      <InfoItem title="20k" description="Stars" >
+      <InfoItem :title="repository.stargazers_count" description="Stars" >
         <StarIcon class="w-6 h-6" />
       </InfoItem>
       <InfoItem title="main" description="Branch">
         <GitBranchIcon class="w-6 h-6" />
       </InfoItem>
-      <InfoItem title="April 2023" description="Last updated">
+      <InfoItem :title="repository.last_updated_at" description="Last updated">
         <CalendarIcon class="w-6 h-6" />
       </InfoItem>
     </CardContent>
@@ -30,4 +30,7 @@ import BookOpenIcon from "~/components/icons/BookOpenIcon.vue";
 import StarIcon from "~/components/icons/StarIcon.vue";
 import GitBranchIcon from "~/components/icons/GitBranchIcon.vue";
 import CalendarIcon from "~/components/icons/CalendarIcon.vue";
+
+const repositoryStore = useRepositoryStore();
+const repository = computed(() => repositoryStore.repository);
 </script>
