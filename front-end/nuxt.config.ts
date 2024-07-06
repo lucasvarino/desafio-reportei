@@ -9,5 +9,8 @@ export default defineNuxtConfig({
   plugins: ["~/plugins/initializeAuth.ts"],
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
+  },
+  runtimeConfig: {
+    appEnv: process.env.APP_ENV || 'development',
   }
 })

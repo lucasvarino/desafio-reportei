@@ -3,6 +3,8 @@ import { defineStore } from 'pinia'
 import { type DetailedCommit, type Commit } from "~/types/commit";
 
 export const useRepositoryStore = defineStore('repository', () => {
+    // Pegar a url com base no ambiente no .env
+    const api = useRuntimeConfig().appEnv === 'production' ? 'https://162.243.166.199/api/' : 'http://localhost:8000/api/'
     const repositories = ref<Repository[]>([])
     const repository = ref<Repository | null>(null)
     const loading = ref(false)
@@ -13,7 +15,7 @@ export const useRepositoryStore = defineStore('repository', () => {
     const fetchRepositories = async (token: string) => {
         loading.value = true
         try {
-            const response = await fetch('http://localhost:8000/api/repositories', {
+            const response = await fetch(`${api}repositories`, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + token,
@@ -33,7 +35,7 @@ export const useRepositoryStore = defineStore('repository', () => {
         console.log("Token: ", token)
         loading.value = true
         try {
-            const response = await fetch('http://localhost:8000/api/repositories/sync', {
+            const response = await fetch(`${api}repositories/sync`, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + token,
@@ -53,7 +55,7 @@ export const useRepositoryStore = defineStore('repository', () => {
     const fetchRepository = async (id: string, token: string) => {
         loading.value = true
         try {
-            const response = await fetch(`http://localhost:8000/api/repositories/${id}`, {
+            const response = await fetch(`${api}repositories/${id}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + token,
@@ -81,7 +83,7 @@ export const useRepositoryStore = defineStore('repository', () => {
     const fetchCommits = async (id: string, token: string) => {
         loading.value = true
         try {
-            const response = await fetch(`http://localhost:8000/api/repositories/${id}/commits`, {
+            const response = await fetch(`${api}repositories/${id}/commits`, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + token,

@@ -5,6 +5,7 @@ import type { User } from '@/types/user'
 export const useUserStore = defineStore('user', () => {
     const user = ref<User | null>(null)
     const token = ref<string | null>()
+    const api = useRuntimeConfig().appEnv === 'production' ? 'https://162.243.166.199/api/' : 'http://localhost:8000/api/'
 
     const setUser = (newUser: User) => {
         console.log('Setting user', newUser)
@@ -19,7 +20,7 @@ export const useUserStore = defineStore('user', () => {
 
     const logout = async () => {
         // Request logout to API
-        await fetch('http://localhost:8000/api/auth/logout', {
+        await fetch(`${api}auth/logout`, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -37,7 +38,7 @@ export const useUserStore = defineStore('user', () => {
 
     const fetchUser = async () => {
         // Fetch user from API
-        const response = await fetch('http://localhost:8000/api/user', {
+        const response = await fetch(`${api}user`, {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',

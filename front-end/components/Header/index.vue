@@ -9,7 +9,7 @@
         <NavLink to="#">Overview</NavLink>
       </nav>
     </div>
-    <UserDropdown  :avatar-src="user.avatar" user-name="lucasvarino"/>
+    <UserDropdown  :avatar-src="user.avatar" :user-name="user.username"/>
   </header>
 </template>
 
