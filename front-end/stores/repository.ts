@@ -6,6 +6,7 @@ export const useRepositoryStore = defineStore('repository', () => {
     const repository = ref<Repository | null>(null)
     const loading = ref(false)
     const error = ref<any>(null)
+    const commits = ref<any>(null)
 
     const fetchRepositories = async (token: string) => {
         loading.value = true
@@ -72,6 +73,25 @@ export const useRepositoryStore = defineStore('repository', () => {
         }
     }
 
+    const fetchCommits = async (id: string, token: string) => {
+        loading.value = true
+        try {
+            const response = await fetch(`http://localhost:8000/api/repositories/${id}/commits`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json',
+                }
+            })
+            commits.value = await response.json()
+        } catch (err) {
+            console.error(err)
+            error.value = err
+        } finally {
+            loading.value = false
+        }
+    }
+
     // Computed state for select component
     const repositoriesOptions = computed(() => {
         return repositories.value.map((repo) => ({
@@ -83,11 +103,13 @@ export const useRepositoryStore = defineStore('repository', () => {
     return {
         repositories,
         repository,
+        commits,
         repositoriesOptions,
         loading,
         error,
         fetchRepositories,
         syncRepositories,
-        fetchRepository
+        fetchRepository,
+        fetchCommits
     }
 })

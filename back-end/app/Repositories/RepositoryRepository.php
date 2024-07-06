@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Commit;
 use App\Models\Repository;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -96,5 +97,24 @@ class RepositoryRepository implements RepositoryRepositoryInterface
         });
 
         return $commitsCreated;
+    }
+
+    /**
+     * @param string $repositoryId
+     * @return Collection
+     */
+    public function getCommitsCountLast90Days(string $repositoryId): Collection
+    {
+        $startDate = Carbon::now()->subDays(90)->startOfDay();
+        $endDate = Carbon::now()->endOfDay();
+
+        return $this->model->findOrFail($repositoryId)
+            ->commits()
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->selectRaw('DATE(commit_date) as date, COUNT(*) as count')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get()
+            ->pluck('count', 'date');
     }
 }

@@ -11,7 +11,7 @@
     </CardHeader>
     <CardContent>
       <div class="w-full h-64 md:h-96">
-        <AreaChart :data="data" index="date" :categories="['commits']" />
+        <AreaChart :data="commits" index="date" :categories="['count']" />
       </div>
     </CardContent>
   </Card>
@@ -24,23 +24,8 @@ import CardTitle from '@/components/ui/card/CardTitle.vue'
 import CardDescription from '@/components/ui/card/CardDescription.vue'
 import AreaChart from "~/components/ui/chart-area/AreaChart.vue";
 
-const data = [];
+const repositoryStore = useRepositoryStore()
+const commits = computed(() => repositoryStore.commits)
 
-onMounted(() => {
-  const getRandomCommits = () => Math.floor(Math.random() * 10);
-
-  const today = new Date();
-  for (let i = 0; i < 90; i++) {
-    const date = new Date(today);
-    date.setDate(today.getDate() - i);
-
-    const formattedDate = date.toISOString().split('T')[0];
-
-    data.push({
-      date: formattedDate,
-      commits: getRandomCommits(),
-    });
-  }
-});
 
 </script>

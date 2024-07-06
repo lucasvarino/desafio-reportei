@@ -6,6 +6,7 @@ use App\Entities\CommitEntity;
 use App\Http\Clients\GithubApiClient;
 use App\Models\Repository;
 use App\Repositories\RepositoryRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use function Symfony\Component\String\s;
 
@@ -69,5 +70,24 @@ class RepositoryService
         $this->repositoryRepository->syncCommits($repositoryId, $commits);
 
         return $commits;
+    }
+
+    public function getCommitsCountLast90Days(string $repositoryId): Collection
+    {
+        $commitsCount = $this->repositoryRepository->getCommitsCountLast90Days($repositoryId);
+
+        $dates = collect();
+        $startDate = Carbon::now()->subDays(90);
+        $endDate = Carbon::now();
+
+        for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
+            $formattedDate = $date->format('d-m-Y');
+            $dates->push([
+                'date' => $formattedDate,
+                'count' => $commitsCount->get($formattedDate, 0),
+            ]);
+        }
+
+        return $dates;
     }
 }

@@ -15,6 +15,7 @@ const repositoryStore = useRepositoryStore();
 onMounted(async () => {
   if (isSelected) {
     await repositoryStore.fetchRepository(isSelected.value, userStore.token)
+    await repositoryStore.fetchCommits(isSelected.value, userStore.token)
   }
 })
 </script>
