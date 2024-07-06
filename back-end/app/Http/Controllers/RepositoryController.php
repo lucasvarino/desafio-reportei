@@ -28,6 +28,7 @@ class RepositoryController extends Controller
     {
         $repository = $this->repositoryService->getRepositoryById($repositoryId);
         $this->repositoryService->syncCommits($repository->user->username, $repository->name, $repository->id, $request->user()->github_token);
+        $repository->load('commits');
 
         return response()->json(RepositoryResource::make($repository));
     }
