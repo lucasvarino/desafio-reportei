@@ -7,4 +7,7 @@ export default defineNuxtConfig({
     componentDir: './components/ui'
   },
   plugins: ["~/plugins/initializeAuth.ts"],
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
+  }
 })

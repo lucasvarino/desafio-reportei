@@ -3,7 +3,7 @@
     <CardHeader>
       <CardTitle>Repository Info</CardTitle>
     </CardHeader>
-    <CardContent class="grid gap-4">
+    <CardContent class="grid gap-4" v-if="!isLoading">
       <InfoItem :title="repository.name" :description="repository.description">
         <BookOpenIcon class="w-6 h-6" />
       </InfoItem>
@@ -16,6 +16,9 @@
       <InfoItem :title="repository.last_updated_at" description="Last updated">
         <CalendarIcon class="w-6 h-6" />
       </InfoItem>
+    </CardContent>
+    <CardContent v-else>
+      <LoadingSpinner />
     </CardContent>
   </Card>
 </template>
@@ -33,4 +36,5 @@ import CalendarIcon from "~/components/icons/CalendarIcon.vue";
 
 const repositoryStore = useRepositoryStore();
 const repository = computed(() => repositoryStore.repository);
+const isLoading = computed(() => repositoryStore.loading);
 </script>

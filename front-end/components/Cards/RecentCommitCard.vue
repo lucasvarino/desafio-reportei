@@ -4,8 +4,11 @@
       <CardTitle>Last Commits</CardTitle>
     </CardHeader>
     <CardContent class="grid gap-4">
-      <CommitItem v-for="commit in recentCommits" :author="commit.author" :message="commit.message"
+      <CommitItem v-if="!isLoading" v-for="commit in recentCommits" :author="commit.author" :message="commit.message"
                   :time="commit.time"/>
+      <div v-else class="flex justify-center items-center h-full">
+        <LoadingSpinner />
+      </div>
     </CardContent>
   </Card>
 </template>
@@ -27,4 +30,6 @@ const recentCommits = computed(() => repositoryStore.recentCommits.map(commit =>
     time: commit.last_updated_at
   }
 }));
+
+const isLoading = computed(() => repositoryStore.loading);
 </script>

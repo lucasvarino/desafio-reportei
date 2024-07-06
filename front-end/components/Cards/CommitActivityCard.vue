@@ -12,6 +12,9 @@
     <CardContent>
       <div class="w-full h-64 md:h-96">
         <AreaChart v-if="!isLoading" :data="commits" index="date" :categories="['count']" />
+        <div v-else class="flex justify-center items-center h-full">
+          <LoadingSpinner />
+        </div>
       </div>
     </CardContent>
   </Card>
