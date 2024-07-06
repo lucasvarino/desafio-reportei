@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { type DetailedCommit, type Commit } from "~/types/commit";
 
 export const useRepositoryStore = defineStore('repository', () => {
-    const api = 'http://162.243.166.199/api/'
+    const api = 'http://165.22.14.182/api/'
     const repositories = ref<Repository[]>([])
     const repository = ref<Repository | null>(null)
     const loading = ref(false)
