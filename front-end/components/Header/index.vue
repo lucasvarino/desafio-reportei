@@ -9,7 +9,7 @@
         <NavLink to="#">Overview</NavLink>
       </nav>
     </div>
-    <UserDropdown  avatar-src="https://github.com/lucasvarino.png" user-name="lucasvarino"/>
+    <UserDropdown  :avatar-src="user.avatar" user-name="lucasvarino"/>
   </header>
 </template>
 
@@ -17,4 +17,7 @@
 import GithubIcon from '@/components/icons/GithubIcon.vue'
 import UserDropdown from '@/components/UserDropdown'
 import NavLink from '@/components/NavLink'
+
+const userStore = useUserStore();
+const user = computed(() => userStore.user);
 </script>
