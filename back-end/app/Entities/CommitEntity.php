@@ -2,6 +2,8 @@
 
 namespace App\Entities;
 
+use Carbon\Carbon;
+
 readonly class CommitEntity
 {
     public function __construct(
@@ -13,15 +15,15 @@ readonly class CommitEntity
         public int $repository_id,
     ) {}
 
-    public function new(array $data): self
+    public static function new(array $data, string $repositoryId): self
     {
         return new self(
-            commit_hash: $data['commit_hash'],
-            author_name: $data['author_name'],
-            author_email: $data['author_email'],
-            commit_date: $data['commit_date'],
-            message: $data['message'],
-            repository_id: $data['repository_id'],
+            commit_hash: $data['sha'],
+            author_name: $data['commit']['author']['name'],
+            author_email: $data['commit']['author']['email'],
+            commit_date: Carbon::parse($data['commit']['author']['date'])->format('Y-m-d H:i:s'),
+            message: $data['commit']['message'],
+            repository_id: $repositoryId,
         );
     }
 

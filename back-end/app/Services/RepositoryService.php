@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Entities\CommitEntity;
 use App\Http\Clients\GithubApiClient;
 use App\Models\Repository;
 use App\Repositories\RepositoryRepositoryInterface;
@@ -61,7 +62,9 @@ class RepositoryService
     public function syncCommits(string $owner, string $repository, string $repositoryId, string $token): Collection
     {
         $client = new GithubApiClient($token);
-        $commits = $client->getCommits($owner, $repository, $repositoryId);
+        $commits = $client
+            ->getCommits($owner, $repository, $repositoryId)
+            ->map(fn (CommitEntity $commit) => $commit->toDatabase());
 
         $this->repositoryRepository->syncCommits($repositoryId, $commits);
 

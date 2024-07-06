@@ -2,6 +2,7 @@
 
 namespace App\Http\Clients;
 
+use App\Entities\CommitEntity;
 use App\Entities\RepositoryEntity;
 use App\Models\Commit;
 use GuzzleHttp\Client;
@@ -67,14 +68,7 @@ class GithubApiClient
             }
 
             return collect(json_decode($response->getBody()->getContents(), true))
-                ->map(fn ($commit) => [
-                    'repository_id' => $repositoryId,
-                    'commit_hash' => $commit['sha'],
-                    'author_name' => $commit['commit']['author']['name'],
-                    'author_email' => $commit['commit']['author']['email'],
-                    'commit_date' => $commit['commit']['author']['date'],
-                    'message' => $commit['commit']['message'],
-                ]);
+                ->map(fn ($commit) => CommitEntity::new($commit, $repositoryId));
 
         } catch (GuzzleException $e) {
             return collect();

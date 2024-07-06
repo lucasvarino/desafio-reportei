@@ -18,11 +18,11 @@ class RepositoryRepository implements RepositoryRepositoryInterface
 
     /**
      * @param string $id
-     * @return Repository
+     * @return
      */
-    public function getById(string $id): Repository
+    public function getById(string $id)
     {
-        return $this->model->findOrFail($id);
+         return $this->model->with('commits')->findOrFail($id);
     }
 
     /**
@@ -88,13 +88,13 @@ class RepositoryRepository implements RepositoryRepositoryInterface
      */
     public function syncCommits(string $repositoryId, Collection $commits): Collection
     {
-        $commits = collect();
+        $commitsCreated = collect();
         DB::transaction(function () use ($repositoryId, $commits) {
             $repository = $this->model->findOrFail($repositoryId);
 
-            $commits->push($repository->commits()->createMany($commits));
+            $commitsCreated = $repository->commits()->createMany($commits);
         });
 
-        return $commits;
+        return $commitsCreated;
     }
 }
