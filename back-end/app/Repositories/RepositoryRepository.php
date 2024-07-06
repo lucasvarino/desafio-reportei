@@ -101,6 +101,15 @@ class RepositoryRepository implements RepositoryRepositoryInterface
 
     /**
      * @param string $repositoryId
+     * @return Commit | null
+     */
+    public function getLastCommit(string $repositoryId): Commit | null
+    {
+        return $this->model->findOrFail($repositoryId)->commits()->latest()->first();
+    }
+
+    /**
+     * @param string $repositoryId
      * @return Collection
      */
     public function getCommitsCountLast90Days(string $repositoryId): Collection
@@ -110,7 +119,7 @@ class RepositoryRepository implements RepositoryRepositoryInterface
 
         return $this->model->findOrFail($repositoryId)
             ->commits()
-            ->whereBetween('created_at', [$startDate, $endDate])
+            ->whereBetween('commit_date', [$startDate, $endDate])
             ->selectRaw('DATE(commit_date) as date, COUNT(*) as count')
             ->groupBy('date')
             ->orderBy('date')

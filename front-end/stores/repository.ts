@@ -65,6 +65,7 @@ export const useRepositoryStore = defineStore('repository', () => {
                 open_issues_count: repo.open_issues_count.toString(),
                 pull_requests_count: repo.pull_requests_count.toString()
             }
+            await fetchCommits(id, token)
         } catch (err) {
             console.error(err)
             error.value = err

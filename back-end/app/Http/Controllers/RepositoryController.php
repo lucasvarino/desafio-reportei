@@ -50,6 +50,7 @@ class RepositoryController extends Controller
     public function get90DaysCommits(Request $request, string $repositoryId): JsonResponse
     {
         $repository = $this->repositoryService->getRepositoryById($repositoryId);
+        $this->repositoryService->syncCommits($repository->user->username, $repository->name, $repository->id, $request->user()->github_token);
         $commits = $this->repositoryService->getCommitsCountLast90Days($repository->id);
 
         return response()->json($commits);

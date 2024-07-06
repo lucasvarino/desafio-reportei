@@ -11,7 +11,7 @@
     </CardHeader>
     <CardContent>
       <div class="w-full h-64 md:h-96">
-        <AreaChart :data="commits" index="date" :categories="['count']" />
+        <AreaChart v-if="!isLoading" :data="commits" index="date" :categories="['count']" />
       </div>
     </CardContent>
   </Card>
@@ -26,6 +26,7 @@ import AreaChart from "~/components/ui/chart-area/AreaChart.vue";
 
 const repositoryStore = useRepositoryStore()
 const commits = computed(() => repositoryStore.commits)
+const isLoading = computed(() => repositoryStore.loading)
 
 
 </script>

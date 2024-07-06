@@ -67,10 +67,23 @@ class RepositoryService
             ->getCommits($owner, $repository, $repositoryId)
             ->map(fn (CommitEntity $commit) => $commit->toDatabase());
 
-        $this->repositoryRepository->syncCommits($repositoryId, $commits);
+        $lastCommit = $this->repositoryRepository->getLastCommit($repositoryId);
 
-        return $commits;
+        if ($lastCommit) {
+            $newCommits = $commits->takeWhile(fn ($commit) => $commit['commit_hash'] !== $lastCommit->commit_hash);
+        } else {
+            $newCommits = $commits;
+        }
+
+        if ($newCommits->isEmpty()) {
+            return $commits;
+        }
+
+        $this->repositoryRepository->syncCommits($repositoryId, $newCommits);
+
+        return $newCommits;
     }
+
 
     public function getCommitsCountLast90Days(string $repositoryId): Collection
     {
@@ -81,9 +94,9 @@ class RepositoryService
         $endDate = Carbon::now();
 
         for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
-            $formattedDate = $date->format('d-m-Y');
+            $formattedDate = $date->format('Y-m-d');
             $dates->push([
-                'date' => $formattedDate,
+                'date' => Carbon::parse($formattedDate)->format('d/m/y'),
                 'count' => $commitsCount->get($formattedDate, 0),
             ]);
         }
