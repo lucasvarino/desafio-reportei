@@ -31,7 +31,6 @@ export const useRepositoryStore = defineStore('repository', () => {
     }
 
     const syncRepositories = async (token: string) => {
-        console.log("Token: ", token)
         loading.value = true
         try {
             const response = await fetch(`${api}repositories/sync`, {

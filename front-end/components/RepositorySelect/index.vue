@@ -17,7 +17,6 @@ const selected = useStorage('repository', "");
 const change = (value: string) => {
   selected.value = value;
   repositoryStore.fetchRepository(value, userStore.token as string);
-  console.log('Mudando o valor')
 }
 
 const repositoriesValue = repositoryStore.repositoriesOptions

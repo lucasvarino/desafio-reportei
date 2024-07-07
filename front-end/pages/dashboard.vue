@@ -17,8 +17,13 @@ const isSelected = useStorage('repository', "");
 const userStore = useUserStore();
 const repositoryStore = useRepositoryStore();
 const loadingIndicator = useLoadingIndicator();
+const router = useRouter();
 
 onMounted(async () => {
+  if (!userStore.isLogged()) {
+    await router.push('/login')
+  }
+
   loadingIndicator.start();
   if (isSelected && isSelected.value !== "") {
     await repositoryStore.fetchRepository(isSelected.value, userStore.token)

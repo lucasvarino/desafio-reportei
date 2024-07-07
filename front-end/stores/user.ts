@@ -8,7 +8,6 @@ export const useUserStore = defineStore('user', () => {
     const api = 'https://api.lucasvarino.tech/api/'
 
     const setUser = (newUser: User) => {
-        console.log('Setting user', newUser)
         user.value = newUser
     }
 
