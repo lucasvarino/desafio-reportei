@@ -16,7 +16,7 @@ onMounted(async () => {
   const code = router.currentRoute.value.query.code
   if (code) {
     // Get request for token
-    const response = await fetch(`http://localhost:8000/api/auth/github/callback?code=${code}`, {
+    const response = await fetch(`https://api.lucasvarino.tech/api/auth/github/callback?code=${code}`, {
       credentials: 'include',
       method: 'GET',
       headers: new Headers({
