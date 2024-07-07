@@ -27,7 +27,7 @@ import GithubIcon from '@/components/icons/GithubIcon.vue'
 const userStore = useUserStore()
 const router = useRouter()
 const login = () => {
-  window.location.href = 'http://localhost:8000/api/auth/github'
+  window.location.href = 'https://api.lucasvarino.tech/api/auth/github'
 }
 
 onMounted(() => {
