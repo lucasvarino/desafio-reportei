@@ -29,22 +29,37 @@ class GithubApiClient
      */
     public function getUserRepositories(string $username): Collection
     {
+        $perPage = 100;
+        $page = 1;
+        $repositories = collect();
+
         try {
-            $response = $this->client->get("users/{$username}/repos", [
-                'query' => [
-                    'per_page' => 100,
-                ],
-            ]);
+            do {
+                $response = $this->client->get("users/{$username}/repos", [
+                    'query' => [
+                        'per_page' => $perPage,
+                        'page' => $page,
+                    ],
+                ]);
 
-            if ($response->getStatusCode() !== 200) {
-                return collect();
-            }
+                if ($response->getStatusCode() !== 200) {
+                    return $repositories;
+                }
 
-            return collect(json_decode($response->getBody()->getContents(), true))
-                ->map(fn ($repository) => RepositoryEntity::new($repository));
+                $data = json_decode($response->getBody()->getContents(), true);
+
+                $repositories = $repositories->merge(
+                    collect($data)->map(fn ($repository) => RepositoryEntity::new($repository))
+                );
+
+                $page++;
+
+            } while (!empty($data) && count($data) === $perPage);
+
+            return $repositories;
 
         } catch (GuzzleException $e) {
-            return collect();
+            return $repositories;
         }
     }
 
@@ -56,22 +71,37 @@ class GithubApiClient
      */
     public function getCommits(string $owner, string $repository, string $repositoryId): Collection
     {
+        $perPage = 100;
+        $page = 1;
+        $commits = collect();
+
         try {
-            $response = $this->client->get("repos/{$owner}/{$repository}/commits", [
-                'query' => [
-                    'per_page' => 100,
-                ],
-            ]);
+            do {
+                $response = $this->client->get("repos/{$owner}/{$repository}/commits", [
+                    'query' => [
+                        'per_page' => $perPage,
+                        'page' => $page,
+                    ],
+                ]);
 
-            if ($response->getStatusCode() !== 200) {
-                return collect();
-            }
+                if ($response->getStatusCode() !== 200) {
+                    return $commits;
+                }
 
-            return collect(json_decode($response->getBody()->getContents(), true))
-                ->map(fn ($commit) => CommitEntity::new($commit, $repositoryId));
+                $data = json_decode($response->getBody()->getContents(), true);
+
+                $commits = $commits->merge(
+                    collect($data)->map(fn ($commit) => CommitEntity::new($commit, $repositoryId))
+                );
+
+                $page++;
+
+            } while (!empty($data) && count($data) === $perPage);
+
+            return $commits;
 
         } catch (GuzzleException $e) {
-            return collect();
+            return $commits;
         }
     }
 }

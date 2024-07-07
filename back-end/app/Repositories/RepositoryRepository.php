@@ -57,6 +57,12 @@ class RepositoryRepository implements RepositoryRepositoryInterface
         return $this->model->updateOrCreate($attributes, $values);
     }
 
+    /**
+     * @param string $username
+     * @param string $userId
+     * @param Collection $newRepositories
+     * @return Collection<Repository>
+     */
     public function syncRepositories(string $username, string $userId, Collection $newRepositories): Collection
     {
         $createdRepositories = collect();

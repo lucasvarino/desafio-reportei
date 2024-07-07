@@ -62,6 +62,13 @@ class RepositoryService
         return $syncRepos->isEmpty() ? $databaseRepositories : $syncRepos;
     }
 
+    /**
+     * @param string $owner
+     * @param string $repository
+     * @param string $repositoryId
+     * @param string $token
+     * @return Collection
+     */
     public function syncCommits(string $owner, string $repository, string $repositoryId, string $token): Collection
     {
         $client = new GithubApiClient($token);
@@ -87,6 +94,10 @@ class RepositoryService
     }
 
 
+    /**
+     * @param string $repositoryId
+     * @return Collection
+     */
     public function getCommitsCountLast90Days(string $repositoryId): Collection
     {
         $commitsCount = $this->repositoryRepository->getCommitsCountLast90Days($repositoryId);
