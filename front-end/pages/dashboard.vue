@@ -26,5 +26,6 @@ onMounted(async () => {
     loading.value = false;
   }
   loadingIndicator.finish();
+  loading.value = false;
 })
 </script>
