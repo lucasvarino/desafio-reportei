@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Clients\GithubApiClient;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -28,15 +30,15 @@ class AuthController extends Controller
                 'email' => $githubUser->email,
                 'avatar' => $githubUser->avatar,
                 'github_token' => $githubUser->token,
-                'github_refresh_token' => $githubUser->refreshToken,
+                'github_refresh_token' => $githubUser->refreshToken || 'a',
             ]
         );
+
         Auth::login($user);
 
-        $token = $user->createToken('authToken')->plainTextToken;
+        $token = JWTAuth::fromUser($user);
 
-        return response()->json(['user' => $user, 'token' => $token], 200)
-            ->cookie('auth_token', $token, 60 * 24, null, null, true, true);
+        return response()->json(['token' => $token], 200);
     }
 
     public function logout()

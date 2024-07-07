@@ -7,13 +7,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:sanctum');
+})->middleware('auth:api');
 
 Route::get('auth/github', [AuthController::class, 'redirectToGithub']);
 Route::get('auth/github/callback', [AuthController::class, 'handleGithubCallback']);
 Route::post('auth/logout', [AuthController::class, 'logout']);
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:api')->group(function () {
     Route::get('repositories', [RepositoryController::class, 'index']);
     Route::get('repositories/sync', [RepositoryController::class, 'syncRepositories']);
     Route::get('repositories/{repository}', [RepositoryController::class, 'show']);

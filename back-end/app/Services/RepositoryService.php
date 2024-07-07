@@ -8,6 +8,7 @@ use App\Models\Repository;
 use App\Repositories\RepositoryRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use function Symfony\Component\String\s;
 
 class RepositoryService
@@ -50,9 +51,10 @@ class RepositoryService
         $databaseRepositories = $this->repositoryRepository->getByUsername($username);
 
         $repoIds = $githubRepositories->pluck('github_id');
+        $databaseRepositoriesIds = $databaseRepositories->pluck('github_id');
 
-        $newRepositories = $githubRepositories->filter(function ($repository) use ($repoIds) {
-            return !$repoIds->contains($repository->github_id);
+        $newRepositories = $githubRepositories->filter(function ($repository) use ($databaseRepositoriesIds) {
+            return !$databaseRepositoriesIds->contains($repository->github_id);
         });
 
         $syncRepos = $this->repositoryRepository->syncRepositories($username, $userId, $newRepositories);
