@@ -26,6 +26,21 @@ import GithubIcon from '@/components/icons/GithubIcon.vue'
 
 const userStore = useUserStore()
 const router = useRouter()
+
+useHead({
+  title: 'GitHub Dashboard - Reportei Tech Challenge - Login',
+  meta: [
+    {
+      name: 'description',
+      content: 'Unlock the power of your GitHub data with our powerful metrics dashboard.'
+    },
+    {
+      name: 'keywords',
+      content: 'GitHub, metrics, dashboard, insights, repositories, commits, contributors'
+    }
+  ]
+})
+
 const login = () => {
   window.location.href = 'https://api.lucasvarino.tech/api/auth/github'
 }

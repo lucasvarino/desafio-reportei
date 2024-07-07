@@ -19,6 +19,20 @@ const repositoryStore = useRepositoryStore();
 const loadingIndicator = useLoadingIndicator();
 const router = useRouter();
 
+useHead({
+  title: 'GitHub Dashboard - Reportei Tech Challenge',
+  meta: [
+    {
+      name: 'description',
+      content: 'Unlock the power of your GitHub data with our powerful metrics dashboard.'
+    },
+    {
+      name: 'keywords',
+      content: 'GitHub, metrics, dashboard, insights, repositories, commits, contributors'
+    }
+  ]
+})
+
 onMounted(async () => {
   if (!userStore.isLogged()) {
     await router.push('/login')

@@ -320,7 +320,6 @@
 </template>
 
 <script setup>
-import Button from '@/components/ui/button/Button.vue';
 import Card from '@/components/ui/card/Card.vue';
 import CommandIcon from "~/components/icons/CommandIcon.vue";
 import RecycleIcon from "~/components/icons/RecycleIcon.vue";
@@ -333,6 +332,18 @@ import XIcon from "~/components/icons/XIcon.vue";
 import UserIcon from "~/components/icons/UserIcon.vue";
 import GitPullRequestIcon from "~/components/icons/GitPullRequestIcon.vue";
 
-const router = useRouter();
+useHead({
+  title: 'GitHub Dashboard - Reportei Tech Challenge',
+  meta: [
+    {
+      name: 'description',
+      content: 'Unlock the power of your GitHub data with our powerful metrics dashboard.'
+    },
+    {
+      name: 'keywords',
+      content: 'GitHub, metrics, dashboard, insights, repositories, commits, contributors'
+    }
+  ]
+})
 </script>
 
