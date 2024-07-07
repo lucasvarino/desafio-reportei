@@ -27,8 +27,8 @@ onMounted(async () => {
     const data = await response.json()
     const { token, user } = data
 
-    userStore.setUser(user)
     userStore.setToken(token)
+    userStore.setUser(user)
     await repositoryStore.syncRepositories(token)
 
     return router.push('/dashboard')

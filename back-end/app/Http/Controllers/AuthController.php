@@ -30,7 +30,7 @@ class AuthController extends Controller
                 'email' => $githubUser->email,
                 'avatar' => $githubUser->avatar,
                 'github_token' => $githubUser->token,
-                'github_refresh_token' => $githubUser->refreshToken || 'a',
+                'github_refresh_token' => $githubUser->refreshToken,
             ]
         );
 
@@ -38,7 +38,7 @@ class AuthController extends Controller
 
         $token = JWTAuth::fromUser($user);
 
-        return response()->json(['token' => $token], 200);
+        return response()->json(['token' => $token, 'user' => $user], 200);
     }
 
     public function logout()

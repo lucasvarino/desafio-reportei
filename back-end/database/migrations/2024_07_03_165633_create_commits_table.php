@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('commits', function (Blueprint $table) {
             $table->id();
-            $table->string('commit_hash')->unique();
+            $table->string('commit_hash');
             $table->string('author_name');
             $table->string('author_email');
             $table->timestamp('commit_date');
