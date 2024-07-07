@@ -6,7 +6,6 @@
         <RepositoryInfoCard />
         <RecentCommitsCard />
       </div>
-      <RepositoryStatsCard />
     </div>
   </main>
 </template>
@@ -15,5 +14,4 @@
 import CommitActivityCard from '@/components/Cards/CommitActivityCard.vue'
 import RepositoryInfoCard from '@/components/Cards/RepositoryInfoCard.vue'
 import RecentCommitsCard from '@/components/Cards/RecentCommitCard.vue'
-import RepositoryStatsCard from '@/components/Cards/RepositoryStatsCard.vue'
 </script>
