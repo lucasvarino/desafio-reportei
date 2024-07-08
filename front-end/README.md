@@ -1,10 +1,18 @@
-# Nuxt 3 Minimal Starter
+# Front End
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+O front end foi desenvolvido em Vuejs 3, utilizando as seguintes ferramentas em conjunto
+
+- [Vuejs](https://vuejs.org/) - Framework
+- [Vite](https://vitejs.dev/) - Bundler
+- [Nuxt](https://nuxtjs.org/) - Framework Vue
+- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS
+- [Pinia](https://pinia.vuejs.org/) - Gerenciamento de estado
+- [Vue Router](https://router.vuejs.org/) - Roteamento
+- [Shadcn](https://www.shadcn-vue.com/) - Componentes
 
 ## Setup
 
-Make sure to install the dependencies:
+Instale as dependências:
 
 ```bash
 # npm
@@ -22,7 +30,7 @@ bun install
 
 ## Development Server
 
-Start the development server on `http://localhost:3000`:
+Inicie o servidor de desenvolvimento em `http://localhost:3000`:
 
 ```bash
 # npm
@@ -38,38 +46,3 @@ yarn dev
 bun run dev
 ```
 
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
